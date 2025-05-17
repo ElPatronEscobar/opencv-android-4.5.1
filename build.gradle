@@ -1,0 +1,42 @@
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
+
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 33
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['jniLibs']
+            java.srcDirs = ['java']
+        }
+    }
+
+    namespace 'org.opencv'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.ElPatronEscobar'
+                artifactId = 'opencv-android-4.5.1'
+                version = '4.5.1'
+            }
+        }
+    }
+}
